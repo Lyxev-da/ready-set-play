@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { analyze, finalMats, flipDigit, rollBest, tierOf, TIERS, toDigits } from './patterns';
+import { analyze, bestVerifiedRoll, finalMats, flipDigit, rollBest, tierOf, TIERS, toDigits } from './patterns';
 import { forgeTier } from './forge';
 import { applyDaily, applyNudge, applyRoll, CHARM_ROLLS, dailyReady, digitsOf, effectiveLuck, applyDevGrant, autoDelay, evolveUpgrade, canNudge, isCharged, isUpgradeAvailable, loadedDice, loadSave, questDone, QUESTS, questsNewlyDone, speedOf, storeSave, UPGRADES, } from './state';
 import { sfx } from './sfx';
@@ -206,7 +206,7 @@ export function useGame(mode, saveKey) {
                 break;
         }
     }, []);
-    const roll = useCallback(async () => {
+    const roll = useCallback(async (chosen = null) => {
         window.clearTimeout(autoTimer.current);
         if (busyRef.current) {
             // Pressing again mid-roll fast-forwards to the result.
@@ -219,18 +219,18 @@ export function useGame(mode, saveKey) {
         setBusy(true);
         const s = saveRef.current;
         const api = stage.current;
-        const n = digitsOf(s);
+        const n = chosen ? chosen.digits.length : digitsOf(s);
         const charged = isCharged(s);
         // A forged roll is consumed by the next roll only.
         const forcing = forceRef.current;
         forceRef.current = null;
         if (forcing)
             setForcedTier(null);
-        const res = forcing
+        const res = chosen ?? (forcing
             ? forcing.n === n
                 ? forcing.analysis
                 : forgeTier(n, forcing.tier).analysis
-            : rollBest(n, effectiveLuck(s), loadedDice(s));
+            : rollBest(n, effectiveLuck(s), loadedDice(s)));
         const sp = speedOf(s);
         const id = ++rollId.current;
         const showy = () => !skipRef.current;
@@ -394,6 +394,10 @@ export function useGame(mode, saveKey) {
         }
     }, [celebrate, commit, toast, wait]);
     rollRef.current = () => void roll();
+    const rollBestNumber = useCallback(() => {
+        if (busyRef.current) return;
+        void roll(bestVerifiedRoll());
+    }, [roll]);
     const viewRef = useRef(view);
     viewRef.current = view;
     /**
@@ -631,6 +635,7 @@ export function useGame(mode, saveKey) {
         toasts,
         stage,
         roll: rollRef,
+        rollBestNumber,
         nudge,
         buy,
         evolve,

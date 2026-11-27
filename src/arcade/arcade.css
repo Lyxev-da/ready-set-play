@@ -941,6 +941,12 @@ button {
   padding-top: 2px;
 }
 
+.best-roll-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
 .luck {
   justify-self: end;
   display: flex;

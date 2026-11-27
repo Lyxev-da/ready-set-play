@@ -7,7 +7,7 @@ import { useCountUp } from '../game/useCountUp';
 import { fmt } from '../game/format';
 import { Tile } from './Tile';
 import { PixelIcon } from './PixelIcon';
-export function Stage({ view, save, busy, canNudge, api, onRoll, onNudge, onAuto, onShop }) {
+export function Stage({ view, save, busy, canNudge, api, onRoll, onBestRoll, onNudge, onAuto, onShop }) {
     const root = useRef(null);
     const inner = useRef(null);
     const back = useRef(null);
@@ -241,6 +241,11 @@ export function Stage({ view, save, busy, canNudge, api, onRoll, onNudge, onAuto
             </div>
           </div>
 
+          <div className="best-roll-row">
+            <Button variant="arcade" size="arcade" type="button" className="btn btn-sm btn-gold" disabled={busy} onClick={onBestRoll} aria-label="Roll best number">
+              <PixelIcon name="star" size={2}/> ROLL BEST NUMBER
+            </Button>
+          </div>
           <p className="key-hint">
             <kbd>SPACE</kbd> to roll · press again to skip
           </p>

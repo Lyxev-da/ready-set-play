@@ -110,7 +110,7 @@ export function Game({ mode, account, onExit, }) {
     return (<div className="app">
       <Hud save={game.save} accountName={profileName} isAdmin={isAdmin} onGift={game.claimDaily} onMute={game.toggleMute} onMode={onExit}/>
       <main className="main">
-        <Stage view={game.view} save={game.save} busy={game.busy} canNudge={canNudge(game.save)} api={game.stage} onRoll={onRoll} onNudge={(i) => void game.nudge(i)} onAuto={game.toggleAuto} onShop={() => openTab('shop')}/>
+        <Stage view={game.view} save={game.save} busy={game.busy} canNudge={canNudge(game.save)} api={game.stage} onRoll={onRoll} onBestRoll={game.rollBestNumber} onNudge={(i) => void game.nudge(i)} onAuto={game.toggleAuto} onShop={() => openTab('shop')}/>
         <Panel save={game.save} tab={tab} open={open} account={account} isAdmin={isAdmin} saveNotice={notice} onTab={pickTab} onClose={() => setOpen(false)} onBuy={game.buy} onEvolve={game.evolve} onClaim={game.claim} onSwitchMode={onExit} onExportSave={exportSaveFile} onImportSave={importSaveFile} onMute={game.toggleMute} onToggleFx={game.toggleFx} onAdminAction={adminAction} forced={game.forced} forceNote={forceNote} onForce={forceAction}/>
       </main>
       <Toasts toasts={game.toasts} onPick={onToast}/>

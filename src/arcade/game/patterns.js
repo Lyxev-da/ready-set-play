@@ -198,6 +198,9 @@ export function finalMats(a) {
     return m;
 }
 export const toDigits = (s) => s.split('').map(Number);
+/** Strongest verified number; not a claim of an exhaustive global maximum. */
+export const BEST_VERIFIED_NUMBER = '177771177771';
+export const bestVerifiedRoll = () => analyze(toDigits(BEST_VERIFIED_NUMBER));
 export const FAIR = { repeat: 0, mirror: 0 };
 function draw(i, d, n, dice) {
     if (dice.repeat + dice.mirror > 0) {
