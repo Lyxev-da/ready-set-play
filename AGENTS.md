@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Game integration
+- Keep the supplied arcade engine under `src/arcade` and mount it through a client-only lazy import at `/`, because its canvas, audio, and device storage require a browser.
+- Preserve the supplied JavaScript engine without enabling JavaScript type checking; use the target project's pinned TanStack dependencies.

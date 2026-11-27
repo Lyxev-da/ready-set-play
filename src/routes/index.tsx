@@ -1,23 +1,26 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { ClientOnly, createFileRoute } from "@tanstack/react-router";
+import { lazy, Suspense } from "react";
 
-// The home route ships no og:image, so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+const GameShell = lazy(() => import("@/arcade/GameShell"));
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "One in a Zillion — Pixel Number Arcade" },
+      { name: "description", content: "Roll a number, uncover stacking patterns, collect rare tiers, and play Standard or Hardcore in One in a Zillion." },
+      { property: "og:title", content: "One in a Zillion — Pixel Number Arcade" },
+      { property: "og:description", content: "Chase rare number patterns in the original pixel arcade, with Standard and Hardcore runs." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+function Loading() {
+  return <main className="arcade-loading" aria-busy="true"><h1>ONE IN A ZILLION</h1><p>OPENING THE ARCADE…</p></main>;
+}
+
 function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
+  return <ClientOnly fallback={<Loading />}><Suspense fallback={<Loading />}><GameShell /></Suspense></ClientOnly>;
 }

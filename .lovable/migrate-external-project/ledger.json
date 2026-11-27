@@ -1,0 +1,66 @@
+{
+  "source": "code-archive",
+  "scope": "Run the supplied browser game without changing its gameplay or device-local account model",
+  "capabilities": [
+    {
+      "capability": "code and gameplay",
+      "source": "src/arcade",
+      "outcome": "preserve",
+      "status": "verified",
+      "next_action": "None",
+      "evidence": "Preview build OK; routing test passed; desktop and mobile Standard/Hardcore rolls, gift, upgrade, quests and reload persistence passed without runtime errors."
+    },
+    {
+      "capability": "schema and records",
+      "source": "device-local save objects; no database or exports",
+      "outcome": "preserve supplied local game for this run request",
+      "status": "not_applicable",
+      "next_action": "None; no hosted database supplied"
+    },
+    {
+      "capability": "auth identities and authorization",
+      "source": "device-local player selector and developer tools",
+      "outcome": "preserve local-only player model; not production authentication",
+      "status": "preserved_unverified",
+      "next_action": "Device-local player selector retained from source; not verified as online authentication."
+    },
+    {
+      "capability": "uploaded file bytes",
+      "source": "procedural canvas textures and pixel sprites",
+      "outcome": "preserve",
+      "status": "verified",
+      "next_action": "None",
+      "evidence": "Preview build OK; routing test passed; desktop and mobile Standard/Hardcore rolls, gift, upgrade, quests and reload persistence passed without runtime errors."
+    },
+    {
+      "capability": "external providers",
+      "source": "signed Nostr leaderboard over public WebSocket relays",
+      "outcome": "preserve",
+      "status": "preserved_unverified",
+      "next_action": "Online leaderboard publishing requires a local player and relay connectivity; no test scores were published."
+    },
+    {
+      "capability": "public endpoints, callbacks, webhooks, schedules and secrets",
+      "source": "none detected; browser-generated signing identities",
+      "outcome": "not_applicable",
+      "status": "not_applicable",
+      "next_action": "None"
+    },
+    {
+      "capability": "cutover",
+      "source": "standalone Vite browser entry",
+      "outcome": "TanStack home route with client-only lazy game",
+      "status": "verified",
+      "next_action": "None",
+      "evidence": "Preview build OK; routing test passed; desktop and mobile Standard/Hardcore rolls, gift, upgrade, quests and reload persistence passed without runtime errors."
+    },
+    {
+      "capability": "verification",
+      "source": "game UI and save persistence",
+      "outcome": "verify",
+      "status": "verified",
+      "next_action": "None",
+      "evidence": "Preview build OK; routing test passed; desktop and mobile Standard/Hardcore rolls, gift, upgrade, quests and reload persistence passed without runtime errors."
+    }
+  ]
+}

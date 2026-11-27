@@ -1,0 +1,3 @@
+- [x] Inspect the supplied game safely.
+- [x] Mount the original arcade at the home page with its pixel design and dependencies.
+- [x] Verify both modes, rolling, panels, and device-local saved progress on desktop and mobile.
